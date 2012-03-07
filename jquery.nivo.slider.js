@@ -339,12 +339,6 @@
 			//Trigger the beforeChange callback
 			settings.beforeChange.call(this);
 					
-            //Trigger the slideshowEnd callback
-			if(vars.currentSlide == vars.totalSlides){ 
-				vars.currentSlide = 0;
-				settings.slideshowEnd.call(this);
-			}
-			if(vars.currentSlide < 0) vars.currentSlide = (vars.totalSlides - 1);
 			//Set vars.currentImage
 			if($(kids[vars.currentSlide]).is('img')){
 				vars.currentImage = $(kids[vars.currentSlide]);
@@ -688,7 +682,6 @@
 		randomStart: false,
 		beforeChange: function(){},
 		afterChange: function(){},
-		slideshowEnd: function(){},
         firstSlide: function(){},
         lastSlide: function(){},
         afterLoad: function(){}
