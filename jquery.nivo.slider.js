@@ -320,7 +320,7 @@
 			}
             
             // Stop
-			if((!vars || vars.stop) && !nudge) return false;
+			if(!vars || vars.stop) return false;
 			
 			//Trigger the beforeChange callback
 			settings.beforeChange.call(this);
