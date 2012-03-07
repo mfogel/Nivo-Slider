@@ -246,7 +246,7 @@
                 timer = setInterval(function(){ nivoRun(slider, kids, settings, 'next'); }, settings.pauseTime);
             }
             //Trigger the afterChange callback
-            settings.afterChange.call(window);
+            settings.afterChange.call(window, vars.previousImage, vars.currentImage);
         });
         
         // Add slices for slice animations
@@ -336,15 +336,19 @@
 				settings.firstSlide.call(this);
 			}
 			
-			//Trigger the beforeChange callback
-			settings.beforeChange.call(this);
-					
 			//Set vars.currentImage
 			if($(kids[vars.currentSlide]).is('img')){
-				vars.currentImage = $(kids[vars.currentSlide]);
+				vars.nextImage = $(kids[vars.currentSlide]);
 			} else {
-				vars.currentImage = $(kids[vars.currentSlide]).find('img:first');
+				vars.nextImage = $(kids[vars.currentSlide]).find('img:first');
 			}
+
+			//Trigger the beforeChange callback
+			settings.beforeChange.call(this, vars.currentImage, vars.nextImage);
+
+			//Step images
+			vars.previousImage = vars.currentImage;
+			vars.currentImage = vars.nextImage;
 			
 			//Set active links
 			if(settings.controlNav){
@@ -680,8 +684,8 @@
 		prevText: 'Prev',
 		nextText: 'Next',
 		randomStart: false,
-		beforeChange: function(){},
-		afterChange: function(){},
+		beforeChange: function(prev_img, next_img){},
+		afterChange: function(prev_img, next_img){},
         firstSlide: function(){},
         lastSlide: function(){},
         afterLoad: function(){}
