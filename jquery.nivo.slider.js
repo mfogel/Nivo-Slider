@@ -184,7 +184,6 @@
                 if($(this).hasClass('active')) return false;
                 clearInterval(timer);
                 timer = '';
-                slider.css('background','url("'+ vars.currentImage.attr('src') +'") no-repeat');
                 vars.currentSlide = $(this).attr('rel') - 1;
                 nivoRun(slider, kids, settings, 'control');
             });
@@ -228,6 +227,9 @@
         
         //Event when Animation finishes
         slider.bind('nivo:animFinished', function(){ 
+            //Set background to match
+            slider.css('background','url("'+ vars.currentImage.attr('src') +'") no-repeat');
+
             vars.running = false; 
             //Hide child links
             $(kids).each(function(){
@@ -323,17 +325,6 @@
 			//Trigger the beforeChange callback
 			settings.beforeChange.call(this);
 					
-			//Set current background before change
-			if(!nudge){
-				slider.css('background','url("'+ vars.currentImage.attr('src') +'") no-repeat');
-			} else {
-				if(nudge == 'prev'){
-					slider.css('background','url("'+ vars.currentImage.attr('src') +'") no-repeat');
-				}
-				if(nudge == 'next'){
-					slider.css('background','url("'+ vars.currentImage.attr('src') +'") no-repeat');
-				}
-			}
 			vars.currentSlide++;
             //Trigger the slideshowEnd callback
 			if(vars.currentSlide == vars.totalSlides){ 
