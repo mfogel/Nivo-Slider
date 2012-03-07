@@ -123,7 +123,7 @@
         //In the words of Super Mario "let's a go!"
         var timer = 0;
         if(!settings.manualAdvance && kids.length > 1){
-            timer = setInterval(function(){ nivoRun(slider, kids, settings, false); }, settings.pauseTime);
+            timer = setInterval(function(){ nivoRun(slider, kids, settings, 'next'); }, settings.pauseTime);
         }
 
         //Add Direction nav
@@ -185,7 +185,7 @@
                 clearInterval(timer);
                 timer = '';
                 vars.currentSlide = $(this).attr('rel') - 1;
-                nivoRun(slider, kids, settings, 'control');
+                nivoRun(slider, kids, settings, 'absolute');
             });
         }
         
@@ -220,7 +220,7 @@
                 vars.paused = false;
                 //Restart the timer
                 if(timer == '' && !settings.manualAdvance){
-                    timer = setInterval(function(){ nivoRun(slider, kids, settings, false); }, settings.pauseTime);
+                    timer = setInterval(function(){ nivoRun(slider, kids, settings, 'next'); }, settings.pauseTime);
                 }
             });
         }
@@ -243,7 +243,7 @@
             }
             //Restart the timer
             if(timer == '' && !vars.paused && !settings.manualAdvance){
-                timer = setInterval(function(){ nivoRun(slider, kids, settings, false); }, settings.pauseTime);
+                timer = setInterval(function(){ nivoRun(slider, kids, settings, 'next'); }, settings.pauseTime);
             }
             //Trigger the afterChange callback
             settings.afterChange.call(window);
@@ -310,22 +310,35 @@
 		}
 
         // Private run method
-		var nivoRun = function(slider, kids, settings, nudge){
+		var nivoRun = function(slider, kids, settings, direction){
 			//Get our vars
 			var vars = slider.data('nivo:vars');
-            
-            //Trigger the lastSlide callback
-            if(vars && (vars.currentSlide == vars.totalSlides - 1)){ 
+
+			// Stop
+			if(!vars || vars.stop) return false;
+
+			//Determine what to move to
+			if(direction === 'next') vars.currentSlide += 1;
+			if(direction === 'prev') vars.currentSlide -= 1;
+			//(direction === 'absolute') pass
+
+			//bounds
+			if(vars.currentSlide >= vars.totalSlides) vars.currentSlide = 0;
+			if(vars.currentSlide < 0) vars.currentSlide = (vars.totalSlides -1);
+
+			//Trigger the lastSlide callback
+			if(vars.currentSlide == (vars.totalSlides - 1)){ 
 				settings.lastSlide.call(this);
 			}
-            
-            // Stop
-			if(!vars || vars.stop) return false;
+
+			//Trigger the firstSlide callback
+			if(vars.currentSlide == 0){ 
+				settings.firstSlide.call(this);
+			}
 			
 			//Trigger the beforeChange callback
 			settings.beforeChange.call(this);
 					
-			vars.currentSlide++;
             //Trigger the slideshowEnd callback
 			if(vars.currentSlide == vars.totalSlides){ 
 				vars.currentSlide = 0;
@@ -676,6 +689,7 @@
 		beforeChange: function(){},
 		afterChange: function(){},
 		slideshowEnd: function(){},
+        firstSlide: function(){},
         lastSlide: function(){},
         afterLoad: function(){}
 	};
