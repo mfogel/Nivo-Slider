@@ -244,7 +244,7 @@
                 timer = setInterval(function(){ nivoRun(slider, kids, settings, false); }, settings.pauseTime);
             }
             //Trigger the afterChange callback
-            settings.afterChange.call(this);
+            settings.afterChange.call(window);
         });
         
         // Add slices for slice animations
