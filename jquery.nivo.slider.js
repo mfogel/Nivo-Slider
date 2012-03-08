@@ -40,8 +40,9 @@
                 if(child.is('a')){
                     child.addClass('nivo-imageLink');
                     link = child;
+                    child = child.find('img:first');
                 }
-                child = child.find('img:first');
+                else return;
             }
             //Get img width & height
             var childWidth = child.width();
