@@ -88,7 +88,10 @@
         }
         
         //Set first background
-        slider.css('background','url("'+ vars.currentImage.attr('src') +'") no-repeat');
+        slider.css({
+            'background-image': 'url("'+ vars.currentImage.attr('src') +'")',
+            'background-repeat': 'no-repeat'
+        });
 
         //Create caption
         slider.append(
@@ -230,7 +233,10 @@
         //Event when Animation finishes
         slider.bind('nivo:animFinished', function(){ 
             //Set background to match
-            slider.css('background','url("'+ vars.currentImage.attr('src') +'") no-repeat');
+            slider.css({
+                'background-image': 'url("'+ vars.currentImage.attr('src') +'")',
+                'background-repeat': 'no-repeat'
+            });
 
             vars.running = false; 
             //Hide child links
@@ -261,7 +267,9 @@
 							left:(sliceWidth*i)+'px', width:(slider.width()-(sliceWidth*i))+'px',
 							height:'0px', 
 							opacity:'0', 
-							background: 'url("'+ vars.currentImage.attr('src') +'") no-repeat -'+ ((sliceWidth + (i * sliceWidth)) - sliceWidth) +'px 0%'
+							'background-image': 'url("'+ vars.currentImage.attr('src') +'")',
+							'background-repeat': 'no-repeat',
+							'background-position': '-'+ ((sliceWidth + (i * sliceWidth)) - sliceWidth) +'px 0%'
 						})
 					);
 				} else {
@@ -270,7 +278,9 @@
 							left:(sliceWidth*i)+'px', width:sliceWidth+'px',
 							height:'0px', 
 							opacity:'0', 
-							background: 'url("'+ vars.currentImage.attr('src') +'") no-repeat -'+ ((sliceWidth + (i * sliceWidth)) - sliceWidth) +'px 0%'
+							'background-image': 'url("'+ vars.currentImage.attr('src') +'")',
+							'background-repeat': 'no-repeat',
+							'background-position': '-'+ ((sliceWidth + (i * sliceWidth)) - sliceWidth) +'px 0%'
 						})
 					);
 				}
@@ -312,7 +322,9 @@
 								top:(boxHeight*rows)+'px',
 								width:(slider.width()-(boxWidth*cols))+'px',
 								height:boxHeight+'px',
-								background: 'url("'+ vars.currentImage.attr('src') +'") no-repeat -'+ ((boxWidth + (cols * boxWidth)) - boxWidth) +'px -'+ ((boxHeight + (rows * boxHeight)) - boxHeight) +'px'
+								'background-image': 'url("'+ vars.currentImage.attr('src') +'")',
+								'background-repeat': 'no-repeat',
+								'background-position':  '-'+ ((boxWidth + (cols * boxWidth)) - boxWidth) +'px -'+ ((boxHeight + (rows * boxHeight)) - boxHeight) +'px'
 							})
 						);
 					} else {
@@ -323,7 +335,9 @@
 								top:(boxHeight*rows)+'px',
 								width:boxWidth+'px',
 								height:boxHeight+'px',
-								background: 'url("'+ vars.currentImage.attr('src') +'") no-repeat -'+ ((boxWidth + (cols * boxWidth)) - boxWidth) +'px -'+ ((boxHeight + (rows * boxHeight)) - boxHeight) +'px'
+								'background-image': 'url("'+ vars.currentImage.attr('src') +'")',
+								'background-repeat': 'no-repeat',
+								'background-position': '-'+ ((boxWidth + (cols * boxWidth)) - boxWidth) +'px -'+ ((boxHeight + (rows * boxHeight)) - boxHeight) +'px'
 							})
 						);
 					}
